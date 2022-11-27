@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../css/sa2.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1 id="header">宝塚北SA：空き-マス</h1>
+    <table border="0" id="big">
+        <tr>
+            <td>
+                <div id="d1">
+                <table border="0">
+                    <tr>
+                        <td id="tb1">1</td>
+                    </tr>
+                </table>
+                </div>
+            </td>
+            <td>
+                <div id="d2">
+                <table border="0">
+                    <tr>
+                        <td id="tb2">2</td>
+                    </tr>
+                </table>
+                </div>
+            </td>
+            <td>
+                <div id="d3">
+                <table border="0">
+                    <tr>
+                        <td id="tb3">3</td>
+                    </tr>
+                </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+<script>
+    window.onload = function(){
+        setInterval("TextLoad()", 1000);
+    }
+
+
+    function TextLoad(){
+        var area_arr
+        var cnt = 0
+        $.ajax({
+            url: "../num.txt",
+            type: "get",
+            success : function(data) {
+                area_arr = data.split(',')
+
+                //色変更とカウント
+                if (area_arr[0] == 1){
+                    document.getElementById('tb1').style.backgroundColor = "red";
+                }else{
+                    document.getElementById('tb1').style.backgroundColor = "greenyellow";
+                    cnt = cnt+1
+                }
+                if (area_arr[1] == 1){
+                    document.getElementById('tb2').style.backgroundColor = "red";
+                }else{
+                    document.getElementById('tb2').style.backgroundColor = "greenyellow";
+                    cnt = cnt+1
+                }
+                if (area_arr[2] == 1){
+                    document.getElementById('tb3').style.backgroundColor = "red";
+                }else{
+                    document.getElementById('tb3').style.backgroundColor = "greenyellow";
+                    cnt = cnt+1
+                }
+
+                //inner
+                document.getElementById('header').innerText = "宝塚北SA：空き"+cnt+"マス"
+            },
+            error:function(data) {
+                alert("Loading error");
+            }
+        })
+    }
+</script>
+</html>
